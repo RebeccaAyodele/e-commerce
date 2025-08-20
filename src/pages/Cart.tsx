@@ -1,11 +1,22 @@
+import { useCartStore } from "../cartStore";
+
 const Cart = () => {
-    return (
-      <div className="p-6">
-        <h1 className="text-xl font-bold">Your Cart</h1>
-        <p>Cart items will go here...</p>
-      </div>
-    );
-  }
-  
-  export default Cart;
-  
+  const items = useCartStore((state) => state.items);
+
+  return (
+    <div>
+      <h2>Cart</h2>
+      {items.length === 0 ? (
+        <p>No items in cart.</p>
+      ) : (
+        items.map((item) => (
+          <div key={item.id}>
+            {item.title} - {item.quantity} × ${item.price}
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default Cart;

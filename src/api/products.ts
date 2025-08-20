@@ -24,7 +24,7 @@ export const useProducts = () => {
 
 // Single Product
 
-export const useProduct = (id: string | undefined) => {
+export const useProduct = (id?: string) => {
     return useQuery<Product, Error>({
       queryKey: ["product", id],
       queryFn: async () => {
