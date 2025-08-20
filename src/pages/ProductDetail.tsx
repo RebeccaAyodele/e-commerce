@@ -21,7 +21,7 @@ const ProductDetail = () => {
 
     setTimeout(() => {
       setIsAdded(false);
-    }, 1500)
+    }, 1000)
   };
 
   if (isLoading) return <p className="p-6">Loading product...</p>;
@@ -40,6 +40,7 @@ const ProductDetail = () => {
       <p className="mt-4">{product.description}</p>
       <button
         onClick={handleAdd}
+        disabled={isAdded}
         className="mt-6 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
       >
         {isAdded ? "Added" : "Add to Cart"}
