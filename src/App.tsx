@@ -9,7 +9,7 @@ import { useCartStore } from "./cartStore";
 import {Home, ShoppingCart, Heart, User, Search } from "lucide-react";
 import CategoryPage from "./pages/CategoryPage";
 
-const categories = ["beauty", "fragrance", "furniture"];
+const categories = ["beauty", "groceries", "furniture"];
 
 const App = () => {
   const totalQuantity = useCartStore((state) => state.totalQuantity());
@@ -32,7 +32,7 @@ const App = () => {
         >
           Cartly
         </div>
-        <div className="flex gap-4 mb-6">
+        <div className="md:flex hidden gap-4 mb-6">
         {categories.map(cat => (
           <NavLink
             key={cat}
@@ -89,9 +89,12 @@ const App = () => {
         </button> */}
 
         {/* Mobile Menu */}
-        <div className="sm:hidden flex space-x-6 items-center text-lg justify-around">
+        <div className="sm:hidden flex space-x-6 items-center text-lg justify-around w-full">
           <NavLink to="/" className="hover:text-gray-200">
             <Home />
+          </NavLink>
+          <NavLink to="/">
+            <Search className="hover:text-gray-200" />
           </NavLink>
           <NavLink to="/wishlist">
             <Heart className="hover:text-gray-200" />

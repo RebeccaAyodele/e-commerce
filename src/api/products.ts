@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import type { Product } from "../types";
 
 const API_URL = "https://dummyjson.com/products";
 
@@ -11,13 +10,14 @@ const fetchProducts = async () => {
 }
 
 const fetchProduct = async (id: string) => {
-  const res = await axios.get(`$API_URL/${id}`);
+  const res = await axios.get(`${API_URL}/${id}`);
+  console.log("fetchProduct response:", res.data);
   return res.data;
 }
 
 const fetchProductsByCategory = async (category: string) => {
-  const res = await axios.get(`$API_URL/category/${category}`);
-  return res.data.products.filter((product: Product) => product.category === category);
+  const res = await axios.get(`${API_URL}/category/${category}`);
+  return res.data.products;
 }
 
 export const useProducts = () => {

@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 </span>
                 <span className="flex items-center justify-evenly">
                     <p>${(product.price * (product.discountPercentage / 100)).toFixed(2)}</p>
-                    <p className="line-through text-black/60">&#8358;{product.price}</p>
+                    <p className="line-through text-black/60">${product.price}</p>
                     <p className="text-green-600 text-xs">({product.discountPercentage}% off)</p>
                 </span>
             </div>

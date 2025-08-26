@@ -14,8 +14,16 @@ const HomePage = () => {
   const { data: product, isLoading, isError, error } = useProducts();
   const shuffledProducts = product ? shuffleArray(product) : []; 
 
-  if (isLoading) return <p className="p-6">Loading products...</p>;
-  if (isError) return <p className="p-6 text-red-500">Error: {error.message}</p>;
+  if (isLoading) return (
+    <div className="w-full h-screen flex justify-center items-center">
+      <p className="p-6">Loading products...</p>
+    </div>
+  );
+  if (isError) return (
+    <div className="w-full h-screen flex justify-center items-center">
+      <p className="p-6 text-red-500">Error: {error.message}</p>
+    </div>
+  )
 
   return (
     <div className="p-6 grid gap-6 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] mt-14">
