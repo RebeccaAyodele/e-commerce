@@ -18,7 +18,7 @@ const Star = (rating: number) => {
     stars.push(<FaRegStar key={`empty-${i}`} className="text-yellow-500 mr-1" />);
   }
 
-  return stars;
+  return <div className="flex items-center">{stars}</div>;
 };
 
 export default Star;

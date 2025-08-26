@@ -1,42 +1,34 @@
 import { Link } from "react-router-dom";
 import { useProducts } from "../api/products";
-import Star from "../components/Star";
+import type { Product } from "../types";
+import ProductCard from "../components/ProductCard";
 
-const Home = () => {
-  const { data, isLoading, isError, error } = useProducts();
+const shuffleArray = (array: Product[]) => {
+  return array
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+};
+
+const HomePage = () => {
+  const { data: product, isLoading, isError, error } = useProducts();
+  const shuffledProducts = product ? shuffleArray(product) : []; 
 
   if (isLoading) return <p className="p-6">Loading products...</p>;
   if (isError) return <p className="p-6 text-red-500">Error: {error.message}</p>;
 
   return (
-    <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {data?.map((product: any) => (
-        <div
-          key={product.id}
-          className="border rounded-lg p-4 shadow hover:shadow-lg transition"
-        >
-          <img
-            src={product.thumbnail}
-            alt={product.title}
-            className="h-40 mx-auto object-contain"
-          />
-          <h2 className="text-lg font-semibold mt-2">{product.title}</h2>
-          <p className="text-gray-600">${product.price}</p>
-          <p className="text-sm text-gray-500">{product.brand}</p>
-          <p className="text-xs text-gray-400">{product.category}</p>
-          <p className="text-yellow-500 text-sm">{Star(product.rating)} 
- {product.rating}</p>
-
-          <Link
-            to={`/product/${product.id}`}
-            className="text-blue-500 underline block mt-2"
-          >
-            View Details
-          </Link>
-        </div>
-      ))}
+    <div className="p-6 grid gap-6 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] mt-14">
+      
+      {shuffledProducts?.map((product: Product) => (
+        <Link key={product.id} to={`/product/${product.id}`}>
+          <ProductCard product={product} />
+        </Link>
+  ))}
     </div>
   );
 };
 
-export default Home;
+export default HomePage;
+
+

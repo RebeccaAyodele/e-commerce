@@ -1,41 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import type { Product } from "../types";
 
 const API_URL = "https://dummyjson.com/products";
 
-// 🔹 Normalizer so UI doesn’t break if API changes
-export const normalizeProduct = (p: any) => ({
-  id: p.id,
-  title: p.title,
-  price: p.price,
-  description: p.description,
-  discountPercentage: p.discountPercentage,
-  rating: p.rating,
-  stock: p.stock,
-  brand: p.brand,
-  category: p.category,
-  thumbnail: p.thumbnail,
-  images: p.images || [],
-});
 
-// 🔹 Fetch all products
 const fetchProducts = async () => {
   const res = await axios.get(API_URL);
-  return res.data.products.map(normalizeProduct);
-};
+  return res.data.products;
+}
+
+const fetchProduct = async (id: string) => {
+  const res = await axios.get(`$API_URL/${id}`);
+  return res.data;
+}
+
+const fetchProductsByCategory = async (category: string) => {
+  const res = await axios.get(`$API_URL/category/${category}`);
+  return res.data.products.filter((product: Product) => product.category === category);
+}
 
 export const useProducts = () => {
   return useQuery({
     queryKey: ["products"],
     queryFn: fetchProducts,
   });
-};
-
-// 🔹 Fetch single product by id
-const fetchProduct = async (id: string) => {
-  const res = await axios.get(`${API_URL}/${id}`);
-  return normalizeProduct(res.data);
-};
+}
 
 export const useProduct = (id?: string) => {
   return useQuery({
@@ -43,4 +33,12 @@ export const useProduct = (id?: string) => {
     queryFn: () => fetchProduct(id!),
     enabled: !!id,
   });
-};
+}
+
+export const useProductsByCategory = (category?: string) => {
+  return useQuery({
+    queryKey: ["products", category],
+    queryFn: () => fetchProductsByCategory(category!),
+    enabled: !!category,
+  });
+}

@@ -1,100 +1,120 @@
-import { Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
-import Home from "./pages/Home";
+import { Routes, Route, NavLink } from "react-router-dom";
+// import { useState } from "react";
+import HomePage from "./pages/Home";
+import { motion } from "framer-motion";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import { useCartStore } from "./cartStore";
-import { FaShoppingCart, FaHeart, FaUser, FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import {Home, ShoppingCart, Heart, User, Search } from "lucide-react";
+import CategoryPage from "./pages/CategoryPage";
+
+const categories = ["beauty", "fragrance", "furniture"];
 
 const App = () => {
   const totalQuantity = useCartStore((state) => state.totalQuantity());
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
+    <div className="min-h-screen">
       {/* Navbar */}
-      <nav className="p-4 bg-blue-600 text-white flex justify-between items-center relative">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl font-extrabold tracking-tight"
+      <motion.nav initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="fixed md:top-0 bottom-0 sm:bottom-auto w-full z-50 border-b bg-white flex justify-between p-4">
+        <div className="flex items-center space-x-4">
+          <div
+          className="text-2xl font-extrabold tracking-tight hidden md:inline"
           style={{
             fontFamily: "Poppins, sans-serif",
             letterSpacing: "-1px",
           }}
         >
           Cartly
-        </Link>
+        </div>
+        <div className="flex gap-4 mb-6">
+        {categories.map(cat => (
+          <NavLink
+            key={cat}
+            to={`/category/${cat}`}
+            className={({ isActive }) =>
+        `px-3 py-1 rounded ${isActive ? " text-blue-500" : "text-black/80"}`
+      }
+          >
+            {cat.charAt(0).toUpperCase() + cat.slice(1)}
+          </NavLink>
+        ))}
+        <NavLink to="/" className="px-3 py-1 rounded ">All</NavLink>
+      </div>
+        </div>
 
         {/* Search Bar (desktop only) */}
-        <div className="hidden md:flex flex-1 mx-6 max-w-lg">
-          <div className="relative w-full">
+        <div className="flex items-center space-x-4">
+          <div className="hidden md:flex mx-6">
+          <div className="relative flex">
             <input
               type="text"
-              placeholder="Search products..."
-              className="w-full px-4 py-2 rounded-full text-black outline-none"
+              placeholder="Search here"
+              className="w-80 px-4 py-2 rounded text-black outline-none bg-gray-200"
             />
-            <FaSearch className="absolute right-3 top-2.5 text-gray-500" />
+            <Search className="absolute right-3 top-2.5 text-gray-700" size={22} />
           </div>
         </div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex space-x-6 items-center text-lg">
-          <Link to="/" className="hover:text-gray-200">
-            Home
-          </Link>
-          <Link to="/wishlist">
-            <FaHeart className="hover:text-gray-200" />
-          </Link>
-          <Link to="/cart" className="relative">
-            <FaShoppingCart className="hover:text-gray-200" />
+          <NavLink to="/wishlist">
+            <Heart className="text-black/80" strokeWidth={1.7} />
+          </NavLink>
+          <NavLink to="/cart" className="relative">
+            <ShoppingCart className="text-black/80" strokeWidth={1.7} />
             {totalQuantity > 0 && (
               <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                 {totalQuantity}
               </span>
             )}
-          </Link>
-          <Link to="/profile">
-            <FaUser className="hover:text-gray-200" />
-          </Link>
+          </NavLink>
+          <NavLink to="/profile">
+            <User className="text-black/80" strokeWidth={1.7} />
+          </NavLink>
+        </div>
         </div>
 
         {/* Mobile Hamburger */}
-        <button
+        {/* <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-2xl"
         >
-          {isOpen ? <FaTimes /> : <FaBars />}
-        </button>
+          {isOpen ? <X /> : <Menu />}
+        </button> */}
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="absolute top-16 left-0 w-full bg-blue-700 text-white flex flex-col items-center space-y-4 py-6 z-50 md:hidden">
-            <Link to="/" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
-            <Link to="/wishlist" onClick={() => setIsOpen(false)}>
-              Wishlist
-            </Link>
-            <Link to="/cart" onClick={() => setIsOpen(false)} className="relative">
-              Cart
-              {totalQuantity > 0 && (
-                <span className="ml-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                  {totalQuantity}
-                </span>
-              )}
-            </Link>
-            <Link to="/profile" onClick={() => setIsOpen(false)}>
-              Profile
-            </Link>
-          </div>
-        )}
-      </nav>
+        <div className="sm:hidden flex space-x-6 items-center text-lg justify-around">
+          <NavLink to="/" className="hover:text-gray-200">
+            <Home />
+          </NavLink>
+          <NavLink to="/wishlist">
+            <Heart className="hover:text-gray-200" />
+          </NavLink>
+          <NavLink to="/cart" className="relative">
+            <ShoppingCart className="hover:text-gray-200" />
+            {totalQuantity > 0 && (
+              <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {totalQuantity}
+              </span>
+            )}
+          </NavLink>
+          <NavLink to="/profile">
+            <User className="hover:text-gray-200" />
+          </NavLink>
+        </div>
+
+      </motion.nav>
 
       {/* Routes */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />}  />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
