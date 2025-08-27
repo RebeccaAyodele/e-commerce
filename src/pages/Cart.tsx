@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import { useCartStore } from "../cartStore";
 
 const Cart = () => {
@@ -5,6 +6,7 @@ const Cart = () => {
 
   return (
     <div>
+      <Navbar />
       <h2>Cart</h2>
       {items.length === 0 ? (
         <p>No items in cart.</p>

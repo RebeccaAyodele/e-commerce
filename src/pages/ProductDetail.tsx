@@ -5,6 +5,7 @@ import { useState } from "react";
 import Star from "../components/Star";
 import SimiliarProduct from "../components/SimiliarProduct";
 import type { Review } from "../types";
+import Navbar from "@/components/Navbar";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -48,6 +49,7 @@ const ProductDetail = () => {
 
   return (
     <div>
+      <Navbar />
       {/* Picture */}
       <div className="flex justify-evenly mt-24">
         <div>

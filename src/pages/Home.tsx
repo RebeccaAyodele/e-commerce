@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useProducts } from "../api/products";
 import type { Product } from "../types";
 import ProductCard from "../components/ProductCard";
+import Filter from "@/components/Filter";
+import Navbar from "@/components/Navbar";
 
 const shuffleArray = (array: Product[]) => {
   return array
@@ -26,13 +28,17 @@ const HomePage = () => {
   )
 
   return (
-    <div className="p-6 grid gap-6 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] mt-14">
+    <div>
+      <Navbar />
+      <div className="p-6 grid gap-6 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] mt-14">
       
       {shuffledProducts?.map((product: Product) => (
         <Link key={product.id} to={`/product/${product.id}`}>
           <ProductCard product={product} />
         </Link>
   ))}
+      <Filter />
+    </div>
     </div>
   );
 };
