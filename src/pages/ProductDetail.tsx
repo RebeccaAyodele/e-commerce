@@ -3,6 +3,8 @@ import { useProduct } from "../api/products";
 import { useCartStore } from "../cartStore";
 import { useState } from "react";
 import Star from "../components/Star";
+import SimiliarProduct from "../components/SimiliarProduct";
+import type { Review } from "../types";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -147,13 +149,32 @@ const ProductDetail = () => {
             <h2>{product.rating}</h2>
             <p>{Star(product.rating)}</p>
           </span>
+          {product.reviews?.length ? (
+            product.reviews.map((review: Review, index: number) => (
+            <div key={index} className="p-4 border rounded-lg">
+              <div className="flex items-center justify-between">
+                <p>{review.reviewerName}</p>
+                <p className="font-semibold">{review.reviewerEmail}</p>
+                <span>
+                  {Star(review.rating)} {review.rating}
+                </span>
+              </div>
+              <p className="text-gray-700 mt-2">{review.comment}</p>
+            </div>
+      ))
+    ) : (
+      <p>No reviews yet.</p>
+    )}
         </div>
         }
       </div>
       </div>
 
       {/* Similiar Products */}
-      <div></div>
+      <div>
+        <h2 className="text-2xl font-bold text-center">Similar Products</h2>
+        <SimiliarProduct category={product.category} currentProductId={product.id} />
+      </div>
     </div>
   );
 };
