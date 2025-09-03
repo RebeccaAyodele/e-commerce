@@ -1,4 +1,8 @@
 import { useForm } from "react-hook-form";
+import { auth } from "@/components/Firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import {useState} from "react"
+import { useNavigate } from "react-router-dom";
 
 type LoginFormInputs = {
   email: string;
@@ -7,16 +11,36 @@ type LoginFormInputs = {
 
 const LoginForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>();
+  const [firebaseError, setFirebaseError] = useState("");
+  const navigate = useNavigate();
 
-  const onSubmit = (data: LoginFormInputs) => {
-    // Handle login logic here
-    console.log(data);
+  const onSubmit = async (data: LoginFormInputs) => {
+    setFirebaseError("");
+    try {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+        navigate("/home");
+
+    } catch (err) {
+      const error = err as { code?: string; message?: string };
+
+      if (error.code === "auth/invalid-credential" || error.code === "auth/wrong-password") {
+        setFirebaseError("Invalid email or password.");
+      } else if (error.code === "auth/user-not-found") {
+        setFirebaseError("No account found with this email.");
+      } else {
+        setFirebaseError(error.message || "Error logging in.");
+      }
+      console.error("Login error:", error);
+    }
+    console.error(data);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <form onSubmit={handleSubmit(onSubmit)} className="max-w-sm mx-auto p-4 border rounded">
         <h2 className="text-xl font-bold mb-4">Login</h2>
+        {firebaseError && <p className="text-red-500 text-sm">{firebaseError}</p>}
+
       <div className="mb-4">
         <label>Email</label>
         <input

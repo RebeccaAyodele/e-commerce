@@ -2,11 +2,13 @@ import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useCartStore } from "../cartStore";
 import {Home, ShoppingCart, Heart, User, Search } from "lucide-react";
+import { auth } from "./Firebase";
 
 const categories = ["beauty", "groceries", "furniture"];
 
 const Navbar = () => {
     const totalQuantity = useCartStore((state) => state.totalQuantity());
+    const user = auth.currentUser;
   return (
     <div className="m-h-screen">
         <motion.nav initial={{ opacity: 0, y: -20 }}
@@ -67,6 +69,7 @@ const Navbar = () => {
           </NavLink>
           <NavLink to="/profile">
             <User className="text-black/80" strokeWidth={1.7} />
+            <p>{user?.displayName || "User"}</p>
           </NavLink>
         </div>
         </div>
