@@ -23,8 +23,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
                     <p className="text-xs flex text-gray-400">{product.rating}{Star(product.rating)}</p>
                 </span>
                 <span className="flex items-center justify-evenly">
-                    <p>${(product.price * (product.discountPercentage / 100)).toFixed(2)}</p>
-                    <p className="line-through text-black/60">${product.price}</p>
+                    <p className="font-semibold text-black/80">${(product.price * (product.discountPercentage / 100)).toFixed(2)}</p>
+                    <p className="line-through text-black/60 text-xs">${product.price}</p>
                     <p className="text-green-600 text-xs">({product.discountPercentage}% off)</p>
                 </span>
             </div>
