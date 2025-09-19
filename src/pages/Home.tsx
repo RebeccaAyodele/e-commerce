@@ -30,7 +30,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <div className="p-6 grid gap-6 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] mt-14">
+      <div className="p-6 grid gap-6 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] grid-cols-[repeat(auto-fit,minmax(200px,1fr))] mt-14">
       
       {shuffledProducts?.map((product: Product) => (
         <Link key={product.id} to={`/product/${product.id}`}>

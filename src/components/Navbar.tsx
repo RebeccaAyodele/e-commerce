@@ -10,7 +10,7 @@ const Navbar = () => {
     const totalQuantity = useCartStore((state) => state.totalQuantity());
     const user = auth.currentUser;
   return (
-    <div className="m-h-screen">
+    <div className="mb-24">
         <motion.nav initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}

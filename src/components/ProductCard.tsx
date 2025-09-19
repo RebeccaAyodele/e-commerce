@@ -2,34 +2,54 @@ import type { Product } from "../types";
 import Star from "./Star";
 
 type ProductCardProps = {
-    product: Product;
-}
+  product: Product;
+};
 
 const ProductCard = ({ product }: ProductCardProps) => {
-    return (
-        <div className="border rounded-lg p-4 shadow hover:shadow-lg transition">
-            <div>
-                <img 
-                src={product.thumbnail}
-                alt={product.title}
-                className="mx-auto object-contain h-40"
-                loading="lazy"
-            />
-            </div>
-            <div>
-                <p className="font-semibold text-black/90">{product.title}</p>
-                <span className="flex items-center gap-2 justify-evenly">
-                    <p className="text-xs">{product.brand}</p>
-                    <p className="text-xs flex text-gray-400">{product.rating}{Star(product.rating)}</p>
-                </span>
-                <span className="flex items-center justify-evenly">
-                    <p className="font-semibold text-black/80">${(product.price * (product.discountPercentage / 100)).toFixed(2)}</p>
-                    <p className="line-through text-black/60 text-xs">${product.price}</p>
-                    <p className="text-green-600 text-xs">({product.discountPercentage}% off)</p>
-                </span>
-            </div>
+  // Calculate discounted price
+  const discountedPrice = (
+    product.price -
+    (product.price * product.discountPercentage) / 100
+  ).toFixed(2);
+
+  return (
+    <div className="flex flex-col border rounded-xl p-4 shadow-sm hover:shadow-md transition bg-white h-80">
+      {/* Image */}
+      <div className="flex justify-center items-center h-40 mb-3">
+        <img
+          src={product.thumbnail}
+          alt={product.title}
+          className="object-contain max-h-full"
+          loading="lazy"
+        />
+      </div>
+
+      {/* Title + Brand */}
+      <div className="flex flex-col gap-1 flex-1">
+        <h3 className="font-medium text-base text-gray-900 line-clamp-2">
+          {product.title}
+        </h3>
+        <span className="text-xs text-gray-500">{product.brand}</span>
+
+        {/* Rating */}
+        <div className="flex items-center gap-1 mt-1">
+            {Star(product.rating)}
+          <span className="text-xs text-gray-500">({product.rating})</span>
         </div>
-    )
-}
+
+        {/* Pricing */}
+        <div className="mt-auto flex items-baseline gap-2">
+          <p className="text-lg font-semibold text-gray-900">
+            ${discountedPrice}
+          </p>
+          <p className="text-sm line-through text-gray-400">${product.price}</p>
+          <p className="text-xs text-green-600 font-medium">
+            {product.discountPercentage}% OFF
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default ProductCard;
