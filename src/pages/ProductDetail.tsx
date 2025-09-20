@@ -22,6 +22,8 @@ const ProductDetail = () => {
       title: product.title,
       price: product.price,
       quantity: 1,
+      thumbnail: product.thumbnail,
+      brand: product.brand,
     });
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
@@ -111,7 +113,7 @@ const ProductDetail = () => {
             whileTap={{ scale: 0.95 }}
             className="mt-6 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 w-1/2 disabled:opacity-50"
           >
-            {isAdded ? "✅ Added" : "Add to Cart"}
+            {isAdded ? "Added" : "Add to Cart"}
           </motion.button>
         </motion.div>
       </div>
@@ -131,7 +133,7 @@ const ProductDetail = () => {
               }`}
             >
               {tab === "details"
-                ? "Details"
+                ? "Product Details"
                 : tab === "policies"
                 ? "Policies & Logistics"
                 : "Ratings & Reviews"}
@@ -208,7 +210,7 @@ const ProductDetail = () => {
                 className="space-y-4"
               >
                 <div className="flex items-center gap-2">
-                  <h2 className="text-xl font-bold">{product.rating}</h2>
+                  <h2 className="text-5xl">{product.rating}</h2>
                   {Star(product.rating)}
                 </div>
                 {product.reviews?.length ? (

@@ -5,7 +5,8 @@ type CartItem = {
   id: string;
   title: string;
   price: number;
-  image?: string;
+  thumbnail?: string;
+  brand?: string;
   quantity: number;
 };
 
@@ -45,7 +46,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "cart-storage",
-      storage: createJSONStorage(() => localStorage), // 👈 ensures it persists
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
