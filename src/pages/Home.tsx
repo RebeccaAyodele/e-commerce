@@ -63,22 +63,39 @@ const HomePage = () => {
     <div>
       <Navbar />
       <div className="flex justify-end px-4">
-        <div className="flex gap-2 mr-6 cursor-pointer" onClick={() => setShowFilters(!showFilters)}>
+        {/* Toggle Filters */}
+        <div
+          className="flex gap-2 mr-6 cursor-pointer"
+          onClick={() => setShowFilters(!showFilters)}
+        >
           <h2>Filter</h2>
           <img src={filter} alt="filter" className="w-4" />
         </div>
-        <div className="flex gap-2 mr-6 cursor-pointer" onClick={() => setSortBy(!sortBy)}>
+
+        {/* Toggle Sort */}
+        <div
+          className="flex gap-2 mr-6 cursor-pointer"
+          onClick={() => setSortBy(sortBy ? null : "default")}
+        >
           <h2>Sort by</h2>
           {sortBy ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </div>
       </div>
+
       <div className="flex gap-6 p-6">
-        <div className="w-1/5">
-          <Filter products={products} onFilter={setFilters} />
-        </div>
+        {/* Filters Sidebar */}
+        {showFilters && (
+          <div className="w-1/5">
+            <Filter products={products} onFilter={setFilters} />
+          </div>
+        )}
 
         {/* Products */}
-        <div className="grid gap-6 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-cols-[repeat(auto-fit,minmax(150px,1fr))] flex-1">
+        <div
+          className={`grid gap-6 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-cols-[repeat(auto-fit,minmax(150px,1fr))] ${
+            showFilters ? "flex-1" : "w-full"
+          }`}
+        >
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product: Product) => (
               <Link key={product.id} to={`/product/${product.id}`}>
