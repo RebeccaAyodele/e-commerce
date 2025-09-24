@@ -12,18 +12,32 @@ type SignUpFormInputs = {
 };
 
 const SignUpForm = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm<SignUpFormInputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<SignUpFormInputs>();
   const [firebaseError, setFirebaseError] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = async (data: SignUpFormInputs) => {
     setFirebaseError("");
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
       const user = userCredential.user;
 
       await updateProfile(user, { displayName: data.name });
-      if (user) {
+
+      // force refresh the current user
+      await auth.currentUser?.reload();
+
+      if (auth.currentUser) {
+        console.log("Updated name:", auth.currentUser.displayName);
         navigate("/home");
       }
     } catch (err) {
@@ -92,14 +106,19 @@ const SignUpForm = () => {
           <input
             {...register("password", {
               required: "Password is required",
-              minLength: { value: 6, message: "Password must be at least 6 characters" },
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters",
+              },
             })}
             type="password"
             placeholder="••••••••"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.password && (
-            <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+            <p className="text-red-500 text-xs mt-1">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
@@ -111,14 +130,17 @@ const SignUpForm = () => {
           <input
             {...register("confirmPassword", {
               required: "Please confirm your password",
-              validate: value => value === watch("password") || "Passwords do not match",
+              validate: (value) =>
+                value === watch("password") || "Passwords do not match",
             })}
             type="password"
             placeholder="••••••••"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.confirmPassword && (
-            <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
+            <p className="text-red-500 text-xs mt-1">
+              {errors.confirmPassword.message}
+            </p>
           )}
         </div>
 
@@ -133,7 +155,10 @@ const SignUpForm = () => {
         {/* Login link */}
         <p className="text-sm text-gray-600 text-center mt-6">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-600 font-medium hover:underline">
+          <Link
+            to="/login"
+            className="text-blue-600 font-medium hover:underline"
+          >
             Login
           </Link>
         </p>

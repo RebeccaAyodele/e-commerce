@@ -3,14 +3,25 @@ import { motion } from "framer-motion";
 import { useCartStore } from "../cartStore";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
 import { auth } from "./Firebase";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import type { User as FirebaseUser } from "firebase/auth";
 
 const categories = ["beauty", "groceries", "furniture"];
 
 const Navbar = () => {
   const totalQuantity = useCartStore((state) => state.totalQuantity());
-  const user = auth.currentUser;
+  const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  // 👇 Listen to auth changes (login, logout, profile update)
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setFirebaseUser(user);
+    });
+
+    return () => unsubscribe(); // cleanup
+  }, []);
 
   return (
     <div className="mb-24">
@@ -66,7 +77,7 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Icons always visible */}
+          {/* Icons */}
           <NavLink to="/wishlist">
             <Heart className="text-black/80" strokeWidth={1.7} />
           </NavLink>
@@ -80,7 +91,9 @@ const Navbar = () => {
           </NavLink>
           <NavLink to="/profile" className="flex items-center gap-1">
             <User className="text-black/80" strokeWidth={1.7} />
-            <span className="text-sm">{user?.displayName || "User"}</span>
+            <span className="text-sm">
+              {firebaseUser?.displayName || firebaseUser?.email || "User"}
+            </span>
           </NavLink>
 
           {/* Hamburger (mobile only) */}
@@ -93,7 +106,7 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Dropdown for Categories */}
+      {/* Mobile Dropdown */}
       {isOpen && (
         <div className="absolute top-16 left-0 w-full bg-white shadow-md p-4 md:hidden">
           <div className="flex flex-col gap-3">

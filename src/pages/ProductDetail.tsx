@@ -61,7 +61,7 @@ const ProductDetail = () => {
       <Navbar />
 
       {/* Top Section - Product Image + Info */}
-      <div className="flex flex-col md:flex-row justify-evenly gap-8 mt-24 p-6">
+      <div className="flex flex-col md:flex-row justify-evenly w-full items-center gap-8 mt-24 p-6">
         {/* Product Image */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -111,7 +111,7 @@ const ProductDetail = () => {
             onClick={handleAdd}
             disabled={isAdded}
             whileTap={{ scale: 0.95 }}
-            className="mt-6 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 w-1/2 disabled:opacity-50"
+            className="mt-6 bg-blue-600 text-white  py-2 rounded-lg text-nowrap hover:bg-blue-700 w-1/2 disabled:opacity-50"
           >
             {isAdded ? "Added" : "Add to Cart"}
           </motion.button>
@@ -121,7 +121,7 @@ const ProductDetail = () => {
       {/* Tabs Section */}
       <div className="w-full flex flex-col items-center mt-12">
         {/* Tab Buttons */}
-        <nav className="flex space-x-6 border-b border-gray-300 w-[80%] justify-center">
+        <nav className="flex space-x-6 border-b border-gray-300 md:w-[80%] w-[95%] justify-center">
           {["details", "policies", "reviews"].map((tab) => (
             <button
               key={tab}
@@ -154,15 +154,15 @@ const ProductDetail = () => {
                 className="space-y-4"
               >
                 <div>
-                  <h2 className="font-semibold text-xl text-black/80">Product Details</h2>
+                  <h2 className="font-semibold md:text-xl text-lg text-black/80">Product Details</h2>
                   <p className="text-gray-700">{product.description}</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold text-xl text-black/80">Weight</h2>
+                  <h2 className="font-semibold md:text-xl text-lg text-black/80">Weight</h2>
                   <p>{product.weight} kg</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold text-xl text-black/80">Dimensions</h2>
+                  <h2 className="font-semibold md:text-xl text-lg text-black/80">Dimensions</h2>
                   <p>Width: {product.dimensions.width}m</p>
                   <p>Height: {product.dimensions.height}m</p>
                   <p>Depth: {product.dimensions.depth}m</p>
@@ -200,46 +200,74 @@ const ProductDetail = () => {
               </motion.div>
             )}
 
-            {activeTab === "reviews" && (
-              <motion.div
-                key="reviews"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="space-y-4"
-              >
-                <div className="flex items-center gap-2">
-                  <h2 className="text-5xl">{product.rating}</h2>
-                  {Star(product.rating)}
-                </div>
-                {product.reviews?.length ? (
-                  product.reviews.map((review: Review, i: number) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="p-4 border rounded-lg shadow-sm"
-                    >
-                      <div className="flex items-center justify-between">
-                        <p className="font-medium">{review.reviewerName}</p>
-                        <span className="text-sm text-gray-500">
-                          {review.reviewerEmail}
-                        </span>
-                        <div className="flex items-center gap-1">
-                          {Star(review.rating)}
-                          <span>{review.rating}</span>
-                        </div>
-                      </div>
-                      <p className="text-gray-700 mt-2">{review.comment}</p>
-                    </motion.div>
-                  ))
-                ) : (
-                  <p className="text-gray-500">No reviews yet.</p>
-                )}
-              </motion.div>
-            )}
+             {activeTab === "reviews" && (
+  <motion.div
+    key="reviews"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
+    className="space-y-6"
+  >
+    {/* Rating Header */}
+    <div className="border-b pb-4">
+      <h2 className="text-2xl font-semibold text-gray-800">
+        Customer Reviews
+      </h2>
+      <div className="flex items-center gap-2 mt-2">
+        {Star(product.rating)}
+        <span className="text-lg font-medium">{product.rating} out of 5</span>
+      </div>
+      <p className="text-sm text-gray-500">
+        {product.reviews?.length || 0} global ratings
+      </p>
+    </div>
+
+    {/* Reviews */}
+    {product.reviews?.length ? (
+      <div className="space-y-6">
+        {product.reviews.map((review: Review, i: number) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.05 }}
+            className="border-b pb-6"
+          >
+            {/* Rating Stars */}
+            <div className="flex items-center gap-2">
+              {Star(review.rating)}
+              <span className="text-sm text-gray-600">{review.rating} out of 5</span>
+            </div>
+
+            {/* Reviewer Info */}
+            <p className="text-sm text-gray-700 mt-1">
+              <span className="font-medium">{review.reviewerName}</span>{" "}
+              <span className="text-gray-500">
+                ({review.reviewerEmail})
+              </span>
+            </p>
+            <p className="text-xs text-gray-400">
+              Reviewed on {new Date(review.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+
+            {/* Comment */}
+            <p className="mt-3 text-gray-800 leading-relaxed">{review.comment}</p>
+          </motion.div>
+        ))}
+      </div>
+    ) : (
+      <p className="text-gray-500 text-center italic">
+        No reviews yet. Be the first to review this product!
+      </p>
+    )}
+  </motion.div>
+)}
+
           </AnimatePresence>
         </div>
       </div>
