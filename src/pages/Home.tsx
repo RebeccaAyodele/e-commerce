@@ -85,8 +85,25 @@ const HomePage = () => {
       <div className="flex gap-6 p-6">
         {/* Filters Sidebar */}
         {showFilters && (
-          <div className="w-1/5">
+          <div className="w-1/5 hidden md:block">
             <Filter products={products} onFilter={setFilters} />
+          </div>
+        )}
+
+        {showFilters && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-start md:hidden">
+            <div className="relative w-full h-full bg-white p-6 overflow-y-auto">
+              {/* Close button */}
+              <button
+                className="absolute top-4 right-4 text-gray-600 hover:text-black"
+                onClick={() => setShowFilters(false)}
+              >
+                ✕
+              </button>
+
+              <h2 className="text-lg font-semibold mb-4">Filter</h2>
+              <Filter products={products} onFilter={setFilters} />
+            </div>
           </div>
         )}
 
