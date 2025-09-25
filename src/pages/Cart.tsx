@@ -1,9 +1,11 @@
 import Navbar from "@/components/Navbar";
 import { useCartStore } from "../cartStore";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const items = useCartStore((state) => state.items);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const navigate = useNavigate();
 
   // Calculate subtotal
   const subtotal = items.reduce(
@@ -76,7 +78,10 @@ const Cart = () => {
                 <span>Total</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
-              <button className="w-full mt-8 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+              <button
+                className="w-full mt-8 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                onClick={() => navigate("/checkout")}
+              >
                 Proceed to Checkout
               </button>
             </div>

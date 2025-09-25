@@ -4,12 +4,13 @@ import { useProductsByCategory } from "../api/products";
 import ProductCard from "../components/ProductCard";
 import type { Product } from "../types";
 import Navbar from "@/components/Navbar";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function CategoryPage() {
   const { categoryName } = useParams<{ categoryName: string }>();
   const { data: products, isLoading, isError, error } = useProductsByCategory(categoryName ?? "");
 
-  if (isLoading) return <p className="p-6">Loading...</p>;
+  if (isLoading) return <LoadingSpinner />
   if (isError) return <p className="p-6 text-red-500">Error: {(error).message}</p>;
 
   return (

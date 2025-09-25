@@ -76,6 +76,9 @@ const SignUpForm = () => {
             type="text"
             placeholder="John Doe"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.currentTarget.form?.requestSubmit();
+            }}
           />
           {errors.name && (
             <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
@@ -92,6 +95,9 @@ const SignUpForm = () => {
             type="email"
             placeholder="you@example.com"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.currentTarget.form?.requestSubmit();
+            }}
           />
           {errors.email && (
             <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
@@ -114,6 +120,9 @@ const SignUpForm = () => {
             type="password"
             placeholder="••••••••"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.currentTarget.form?.requestSubmit();
+            }}
           />
           {errors.password && (
             <p className="text-red-500 text-xs mt-1">
@@ -136,6 +145,9 @@ const SignUpForm = () => {
             type="password"
             placeholder="••••••••"
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.currentTarget.form?.requestSubmit();
+            }}
           />
           {errors.confirmPassword && (
             <p className="text-red-500 text-xs mt-1">
