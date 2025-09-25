@@ -126,7 +126,7 @@ const ProductDetail = () => {
           className="flex-1 flex flex-col gap-3"
         >
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="md:text-2xl text-lg font-bold text-gray-900">
               {product.title}
             </h1>
             <motion.button
@@ -202,7 +202,7 @@ const ProductDetail = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`py-2 px-4 font-medium text-lg transition mb-4 ${
+              className={`md:py-2 py-1 md:px-4 px-2 font-medium md:text-lg md:leading-none leading-5 transition mb-4 ${
                 activeTab === tab
                   ? "text-blue-700 border-b-4 border-blue-700"
                   : "text-gray-500 hover:text-gray-700"
@@ -218,7 +218,7 @@ const ProductDetail = () => {
         </nav>
 
         {/* Tab Content */}
-        <div className="p-6 w-[80%] text-left">
+        <div className="p-6 md:w-[80%] w-[90%] text-left">
           <AnimatePresence mode="wait">
             {activeTab === "details" && (
               <motion.div
@@ -230,24 +230,24 @@ const ProductDetail = () => {
                 className="space-y-4"
               >
                 <div>
-                  <h2 className="font-semibold md:text-xl text-lg text-black/80">
+                  <h2 className="font-semibold md:text-xl text-base text-black/80">
                     Product Details
                   </h2>
                   <p className="text-gray-700">{product.description}</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold md:text-xl text-lg text-black/80">
+                  <h2 className="font-semibold md:text-xl text-base text-black/80">
                     Weight
                   </h2>
                   <p>{product.weight} kg</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold md:text-xl text-lg text-black/80">
+                  <h2 className="font-semibold md:text-xl text-base text-black/80">
                     Dimensions
                   </h2>
-                  <p>Width: {product.dimensions.width}m</p>
-                  <p>Height: {product.dimensions.height}m</p>
-                  <p>Depth: {product.dimensions.depth}m</p>
+                  <p className="md:text-base text-sm">Width: {product.dimensions.width}m</p>
+                  <p className="md:text-base text-sm">Height: {product.dimensions.height}m</p>
+                  <p className="md:text-base text-sm">Depth: {product.dimensions.depth}m</p>
                 </div>
               </motion.div>
             )}
@@ -262,28 +262,28 @@ const ProductDetail = () => {
                 className="space-y-4"
               >
                 <div>
-                  <h2 className="font-semibold text-xl text-black/80">
+                  <h2 className="font-semibold md:text-xl text-base text-black/80">
                     Shipping Information
                   </h2>
-                  <p>{product.shippingInformation}</p>
+                  <p className="md:text-base text-sm">{product.shippingInformation}</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold text-xl text-black/80">
+                  <h2 className="font-semibold md:text-xl text-base text-black/80">
                     Return Policy
                   </h2>
-                  <p>{product.returnPolicy}</p>
+                  <p className="md:text-base text-sm">{product.returnPolicy}</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold text-xl text-black/80">
+                  <h2 className="font-semibold md:text-xl text-base text-black/80">
                     Warranty
                   </h2>
-                  <p>{product.warrantyInformation}</p>
+                  <p className="md:text-base text-sm">{product.warrantyInformation}</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold text-xl text-black/80">
+                  <h2 className="font-semibold md:text-xl text-base text-black/80">
                     Availability
                   </h2>
-                  <p>
+                  <p className="md:text-base text-sm">
                     {product.availabilityStatus}: {product.stock} left
                   </p>
                 </div>
@@ -301,7 +301,7 @@ const ProductDetail = () => {
               >
                 {/* Rating Header */}
                 <div className="border-b pb-4">
-                  <h2 className="text-2xl font-semibold text-gray-800">
+                  <h2 className="md:text-2xl text-xl font-semibold text-gray-800">
                     Customer Reviews
                   </h2>
                   <div className="flex items-center gap-2 mt-2">
@@ -372,7 +372,7 @@ const ProductDetail = () => {
 
       {/* Similar Products */}
       <div className="mt-12">
-        <h2 className="text-2xl font-bold text-center mb-6">
+        <h2 className="md:text-2xl text-xl font-bold text-center mb-6">
           Similar Products
         </h2>
         <SimiliarProduct

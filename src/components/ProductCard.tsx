@@ -26,7 +26,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       {/* Title + Brand */}
       <div className="flex flex-col gap-1 flex-1">
-        <h3 className="font-medium text-base text-gray-900 line-clamp-2">
+        <h3 className="font-medium md:text-base text-xs text-gray-900 line-clamp-2">
           {product.title}
         </h3>
         <span className="text-xs text-gray-500">{product.brand}</span>
@@ -39,12 +39,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         {/* Pricing */}
         <div className="mt-auto flex items-baseline gap-2">
-          <p className="text-lg font-semibold text-gray-900">
+          <p className="md:text-lg text-base font-semibold text-gray-900">
             ${discountedPrice}
           </p>
-          <p className="text-sm line-through text-gray-400">${product.price}</p>
+          <p className="md:text-sm text-xs line-through text-gray-400">${product.price}</p>
           <p className="text-xs text-green-600 font-medium">
-            {product.discountPercentage}% OFF
+            {product.discountPercentage}% off
           </p>
         </div>
       </div>

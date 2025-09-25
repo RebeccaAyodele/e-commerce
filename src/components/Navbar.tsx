@@ -47,7 +47,7 @@ const Navbar = () => {
         {/* Logo */}
         <div className="flex items-center gap-2 select-none">
           <span
-            className="px-4 py-1  from-blue-500 via-purple-500 to-pink-500 text-2xl font-extrabold tracking-tight"
+            className="px-4 py-1 rounded-xl text-2xl font-extrabold tracking-tight"
             style={{
               fontFamily: "Poppins, sans-serif",
               letterSpacing: "-1px",
@@ -94,6 +94,12 @@ const Navbar = () => {
             }
           >
             All
+            {location.pathname === "/home" && (
+              <motion.div
+                layoutId="underline"
+                className="absolute left-0 right-0 -bottom-1 h-1 bg-blue-500 rounded"
+              />
+            )}
           </NavLink>
         </div>
 
@@ -118,12 +124,11 @@ const Navbar = () => {
 
           {/* Icons */}
           <NavLink to="/wishlist" className="relative">
-            {({ isActive }: { isActive: boolean }) => (
+            {({ isActive }) => (
               <>
                 <Heart
                   strokeWidth={1.7}
                   className={isActive ? "text-blue-600" : "text-black/80"}
-                  fill={isActive ? "#2563eb" : "none"}
                 />
                 {wishlistCount > 0 && (
                   <span className="absolute -top-2 -right-3 bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
@@ -133,14 +138,12 @@ const Navbar = () => {
               </>
             )}
           </NavLink>
-
           <NavLink to="/cart" className="relative">
-            {({ isActive }: { isActive: boolean }) => (
+            {({ isActive }) => (
               <>
                 <ShoppingCart
                   strokeWidth={1.7}
                   className={isActive ? "text-blue-600" : "text-black/80"}
-                  fill={isActive ? "#2563eb" : "none"}
                 />
                 {totalQuantity > 0 && (
                   <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
@@ -150,22 +153,19 @@ const Navbar = () => {
               </>
             )}
           </NavLink>
-
           <NavLink to="/profile" className="flex items-center gap-1">
-            {({ isActive }: { isActive: boolean }) => (
+            {({ isActive }) => (
               <>
                 <User
                   strokeWidth={1.7}
                   className={isActive ? "text-blue-600" : "text-black/80"}
-                  fill={isActive ? "#2563eb" : "none"}
                 />
-                <span className="text-sm">
+                <span className="text-sm md:flex hidden">
                   {firebaseUser?.displayName || firebaseUser?.email || "User"}
                 </span>
               </>
             )}
           </NavLink>
-
           {/* Hamburger (mobile only) */}
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -178,7 +178,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white shadow-md p-4 md:hidden">
+        <div className="absolute top-16 left-0 w-full bg-white shadow-md p-4 md:hidden z-50">
           <div className="flex flex-col gap-3">
             {categories.map((cat) => (
               <NavLink

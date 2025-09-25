@@ -97,23 +97,23 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex justify-end px-4">
+      <div className="flex items-center justify-end w-full md:px-4 px-2">
         {/* Toggle Filters */}
         <div
           className="flex gap-2 mr-6 cursor-pointer"
           onClick={() => setShowFilters(!showFilters)}
         >
-          <h2>Filter</h2>
+          <h2 className="md:text-base text-sm">Filter</h2>
           <img src={filter} alt="filter" className="w-4" />
         </div>
 
         {/* Sort Dropdown */}
         <div className="flex gap-2 mr-6 items-center">
-          <h2>Sort by</h2>
+          <h2 className="md:text-base text-sm">Sort by</h2>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="border rounded px-2 py-1"
+            className="border rounded px-2 py-1 md:w-36 w-16 md:text-base text-sm"
           >
             {sortOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -151,7 +151,7 @@ const HomePage = () => {
 
         {/* Products */}
         <div
-          className={`grid gap-6 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-cols-[repeat(auto-fit,minmax(150px,1fr))] ${
+          className={`grid md:gap-6 gap-2 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-cols-[repeat(auto-fit,minmax(120px,1fr))] ${
             showFilters ? "flex-1" : "w-full"
           }`}
         >
