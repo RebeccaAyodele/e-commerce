@@ -13,7 +13,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   ).toFixed(2);
 
   return (
-    <div className="flex flex-col border rounded-xl p-4 shadow-sm hover:shadow-md transition bg-white h-80">
+    <div className="flex flex-col border rounded-xl md:p-4 p-2 shadow-sm hover:shadow-md transition bg-white h-80">
       {/* Image */}
       <div className="flex justify-center items-center h-40 mb-3">
         <img
@@ -38,8 +38,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </div>
 
         {/* Pricing */}
-        <div className="mt-auto flex items-baseline gap-2">
-          <p className="md:text-lg text-base font-semibold text-gray-900">
+        <div className="mt-auto flex items-baseline md:justify-normal justify-around">
+          <p className="md:text-lg text-sm font-semibold text-gray-900">
             ${discountedPrice}
           </p>
           <p className="md:text-sm text-xs line-through text-gray-400">${product.price}</p>

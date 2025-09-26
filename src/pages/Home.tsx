@@ -124,7 +124,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="flex gap-6 p-6">
+      <div className="flex gap-6 md:p-6 p-2">
         {/* Filters Sidebar */}
         {showFilters && (
           <div className="w-1/5 hidden md:block">
@@ -151,7 +151,7 @@ const HomePage = () => {
 
         {/* Products */}
         <div
-          className={`grid md:gap-6 gap-2 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-cols-[repeat(auto-fit,minmax(120px,1fr))] ${
+          className={`grid md:gap-6 gap-2 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] grid-cols-[repeat(auto-fit,minmax(150px,1fr))] ${
             showFilters ? "flex-1" : "w-full"
           }`}
         >

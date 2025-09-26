@@ -16,7 +16,7 @@ export default function CategoryPage() {
   return (
     <div>
       <Navbar />
-      <div className="p-6 grid gap-6 grid-cols-[repeat(auto-fit,minmax(200px,1fr))] mt-24">
+      <div className="md:p-6 p-2 grid md:gap-6 gap-2 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] grid-cols-[repeat(auto-fit,minmax(150px,1fr))] mt-24">
       {products?.map((product: Product) => (
         <Link key={product.id} to={`/product/${product.id}`}>
           <ProductCard product={product} />
